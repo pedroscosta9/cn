@@ -1,35 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
 import Axios from "axios";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+
+import Login from "./component/Login/Login"
+import Register from "./component/Register/Register"
 
 function App() {
-  const [registerUsername, setRegisterUsername] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
-  const [loginUsername, setLoginUsername] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
   const [data, setData] = useState(null);
-  const register = () => {
-    Axios({
-      method: "POST",
-      data: {
-        username: registerUsername,
-        password: registerPassword,
-      },
-      withCredentials: true,
-      url: "http://localhost:4000/register",
-    }).then((res) => console.log(res));
-  };
-  const login = () => {
-    Axios({
-      method: "POST",
-      data: {
-        username: loginUsername,
-        password: loginPassword,
-      },
-      withCredentials: true,
-      url: "http://localhost:4000/login",
-    }).then((res) => console.log(res));
-  };
   const getUser = () => {
     Axios({
       method: "GET",
@@ -40,38 +18,32 @@ function App() {
       console.log(res.data);
     });
   };
+  const logout = () => {
+    Axios({
+      method: "POST",
+      withCredentials: true,
+      url: "http://localhost:4000/logout",
+    }).then((res) => console.log(res));
+  };
   return (
     <div className="App">
-      <div>
-        <h1>Register</h1>
-        <input
-          placeholder="username"
-          onChange={(e) => setRegisterUsername(e.target.value)}
-        />
-        <input
-          placeholder="password"
-          onChange={(e) => setRegisterPassword(e.target.value)}
-        />
-        <button onClick={register}>Submit</button>
-      </div>
-
-      <div>
-        <h1>Login</h1>
-        <input
-          placeholder="username"
-          onChange={(e) => setLoginUsername(e.target.value)}
-        />
-        <input
-          placeholder="password"
-          onChange={(e) => setLoginPassword(e.target.value)}
-        />
-        <button onClick={login}>Submit</button>
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
 
       <div>
         <h1>Get User</h1>
         <button onClick={getUser}>Submit</button>
         {data ? <h1>Welcome Back {data.username}</h1> : null}
+      </div>
+
+      <div>
+        <button onClick={logout}>Log Out</button>
       </div>
     </div>
   );

@@ -53,8 +53,12 @@ app.post("/login", (req, res, next) => {
         else {
             req.logIn(user, (err) => {
                 if (err) throw err;
+                User.findOne({username : user.username}, async (err, doc) =>{
+                    if (err) throw err;
+                    doc.isOnline = true;
+                    await doc.save();
+                })
                 res.send("Successfully Authenticated");
-                console.log(req.user);
             });
         }
     })(req, res, next);
@@ -71,21 +75,26 @@ app.post("/register", (req, res) => {
                 password: hashedPassword,
                 isOnline: true,
             });
-            await newUser.save();
+            await newUser.save()
             res.send("User Created");
         }
     });
 });
 
-app.post('/logout', (req, res) => {
-    console.log(req);
-    req.logout();
-    res.redirect('/http://localhost/login  ');
+app.post('/logout', function(req, res, next) {
+    User.findOne({username : req.user.username}, async (err, doc) =>{
+        if (err) throw err;
+        doc.isOnline = false;
+        await doc.save();
+    })
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+    });
   });
 
 app.get("/user", (req, res) => {
     res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
-   
 });
 
 
