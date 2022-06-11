@@ -16,7 +16,7 @@ function Register() {
       },
       withCredentials: true,
       url: "http://localhost:4000/register",
-    }).then(() => navigate("/", { replace: true }));
+    }).then(() => navigate("/login", { replace: true }));
   };
 
   return (

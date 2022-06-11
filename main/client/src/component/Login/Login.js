@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {getLogStatus, changeLogStatus} from "./../../globalVariables/globalVariables"
 
 function Login() {
     const [loginUsername, setLoginUsername] = useState("");
@@ -16,7 +17,12 @@ function Login() {
             },
             withCredentials: true,
             url: "http://localhost:4000/login",
-        }).then(() => navigate("/", { replace: true }));
+        }).then(() => {
+            console.log(getLogStatus);
+            navigate("/", { replace: true });
+            changeLogStatus();
+            console.log(getLogStatus);
+        });
     };
 
     return (
@@ -30,7 +36,7 @@ function Login() {
                 placeholder="password"
                 onChange={(e) => setLoginPassword(e.target.value)}
             />
-            <button onClick={login}>Submit</button>
+            <button onClick={login} >Submit</button>
         </div>
     )
 }
