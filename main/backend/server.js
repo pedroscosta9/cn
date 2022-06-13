@@ -53,7 +53,7 @@ app.post("/login", (req, res, next) => {
         else {
             req.logIn(user, (err) => {
                 if (err) throw err;
-                User.findOne({username : user.username}, async (err, doc) =>{
+                User.findOne({ username: user.username }, async (err, doc) => {
                     if (err) throw err;
                     doc.isOnline = true;
                     await doc.save();
@@ -81,17 +81,33 @@ app.post("/register", (req, res) => {
     });
 });
 
-app.post('/logout', function(req, res, next) {
-    User.findOne({username : req.user.username}, async (err, doc) =>{
+var times = 0
+app.get('/usersList', function (req, res) {
+    
+    User.find({}, function (err, users) {
+        var userList = [];
+
+        users.forEach(function (user) {
+            userList.push(user)
+        });
+
+        res.send(userList);
+    });
+    console.log("/usersList ",times)
+    times += 1
+});
+
+app.post('/logout', function (req, res, next) {
+    User.findOne({ username: req.user.username }, async (err, doc) => {
         if (err) throw err;
         doc.isOnline = false;
         await doc.save();
     })
-    req.logout(function(err) {
+    req.logout(function (err) {
         if (err) { return next(err); }
-       
+
     });
-  });
+});
 
 app.get("/user", (req, res) => {
     res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.

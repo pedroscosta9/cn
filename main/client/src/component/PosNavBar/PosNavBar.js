@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,7 +20,7 @@ function PosNavBar({username, callbackNavBar}) {
             url: "http://localhost:4000/logout",
         }).then(() => {
             navigate("/", { replace: true })
-            callbackNavBar("ola")
+            callbackNavBar()
         });
     };
 

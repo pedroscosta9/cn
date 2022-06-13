@@ -1,38 +1,54 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import Axios from "axios";
-import {useNavigate} from "react-router-dom";
 
 function Home() {
-    const [data, setData] = useState(null);
-    const navigate = useNavigate();
-
-    const getUser = () => {
+    const [data, setData] = useState([]);
+    const getUsers = () => {
         Axios({
             method: "GET",
             withCredentials: true,
-            url: "http://localhost:4000/user",
+            url: "http://localhost:4000/usersList",
         }).then((res) => {
             setData(res.data);
         });
+    };   
+
+    useEffect(() =>
+        getUsers(),
+        []
+    )
+
+    const online = () => {
+        var users = []
+        for(const i in data){
+            if(data[i].isOnline === true) users.push(<li key={data[i]._id}>{data[i].username}</li>)
+        }
+        return users
     };
-    const logout = () => {
-        Axios({
-            method: "POST",
-            withCredentials: true,
-            url: "http://localhost:4000/logout",
-        }).then(() => navigate("/", { replace: true }));
+
+    const offline = () => {
+        var users = []
+        for(const i in data){
+            if(data[i].isOnline === false) users.push(<li key={data[i]._id}>{data[i].username}</li>)
+        }
+        return users
     };
 
     return (
         <div>
+            <button onClick={() => getUsers()}></button>
             <div>
-                <h1>Get User</h1>
-                <button onClick={getUser}>Submit</button>
-                {data ? <h1>Welcome Back {data.username}</h1> : null}
+                <h1>Online</h1>
+                <ul>
+                    {online()}
+                </ul>
             </div>
-
+            <br/>
             <div>
-                <button onClick={logout}>Log Out</button>
+                <h1>Offline</h1>
+                <ul>
+                    {offline()}
+                </ul>
             </div>
         </div>
     );

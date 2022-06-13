@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function Register() {
   const [registerUsername, setRegisterUsername] = useState("");
@@ -47,12 +48,8 @@ function Register() {
 
             <div className="text-center">
               <span className="txt1">Already have an account?</span>
-              <a className="txt2" href="/login">
-                Login
-              </a>
+              <Link className="txt2" to="/login">Login</Link>
             </div>
-
-
           </form>
         </div>
       </div>
