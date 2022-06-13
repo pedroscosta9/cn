@@ -13,7 +13,6 @@ function Home() {
             url: "http://localhost:4000/user",
         }).then((res) => {
             setData(res.data);
-            console.log(res.data);
         });
     };
     const logout = () => {
@@ -21,7 +20,7 @@ function Home() {
             method: "POST",
             withCredentials: true,
             url: "http://localhost:4000/logout",
-        }).then((res) => navigate("/", { replace: true }));
+        }).then(() => navigate("/", { replace: true }));
     };
 
     return (

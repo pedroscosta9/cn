@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {getLogStatus, changeLogStatus} from "./../../globalVariables/globalVariables"
 
-function Login() {
+function Login({callback}) {
     const [loginUsername, setLoginUsername] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const navigate = useNavigate();
@@ -18,10 +17,8 @@ function Login() {
             withCredentials: true,
             url: "http://localhost:4000/login",
         }).then(() => {
-            console.log(getLogStatus);
+            callback(loginUsername)
             navigate("/", { replace: true });
-            changeLogStatus();
-            console.log(getLogStatus);
         });
     };
 

@@ -1,32 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
-
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./component/Login/Login"
 import Register from "./component/Register/Register"
-import Navbar from "./component/Navbar/Navbar"
+import PreNavbar from "./component/PreNavbar/PreNavbar"
+import PosNavBar from "./component/PosNavBar/PosNavBar"
 import Home from "./component/Home/Home"
+
 function App() {
+  const [logged, setLogged] = useState(false)
+  const [username, setUsername] = useState("");
 
+  const callbackLogin = (name) => {
+    setLogged(!logged)
+    setUsername(name)
+  }
 
+  const callbackNavBar = () => {
+    console.log(getNavBar())
+    setLogged(!logged)
+    setUsername("")
+  }
+
+  const getNavBar = () => {
+    if(logged) {
+      return <PosNavBar username={username} callback={callbackNavBar}/>;
+    }
+    else{
+      return <PreNavbar />
+    }
+  }
 
   return (
     <div className="App">
-
-
-      <Router>
-        <Navbar />
+      <BrowserRouter>
+        {getNavBar()}
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login callback={callbackLogin}/>} />
           <Route path="/register" element={<Register />} />
-          <Route path="/" onEnter={()=>console.log("a1")} element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/*" element={<Navigate to="/" />} />
-
         </Routes>
-      </Router>
-
-
-
+      </BrowserRouter>
     </div>
   );
 }
