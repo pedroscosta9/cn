@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Axios from "axios";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [registerUsername, setRegisterUsername] = useState("");
@@ -20,17 +20,42 @@ function Register() {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <input
-        placeholder="username"
-        onChange={(e) => setRegisterUsername(e.target.value)}
-      />
-      <input
-        placeholder="password"
-        onChange={(e) => setRegisterPassword(e.target.value)}
-      />
-      <button onClick={register}>Submit</button>
+    <div className="container">
+      <div className="container-login">
+        <div className="wrap-login">
+          <form className="login-form">
+            <span className="login-form-title"> Create account </span>
+
+            <div className="wrap-input">
+              <input
+                className={registerUsername !== "" ? "has-val input" : "input"}
+                onChange={(e) => setRegisterUsername(e.target.value)} />
+              <span className="focus-input" data-placeholder="Username"></span>
+            </div>
+
+            <div className="wrap-input">
+              <input className={registerPassword !== "" ? "has-val input" : "input"}
+                type="password" onChange={(e) => setRegisterPassword(e.target.value)}
+
+              />
+              <span className="focus-input" data-placeholder="Password"></span>
+            </div>
+
+            <div className="container-login-form-btn">
+              <button className="login-form-btn" type="button" onClick={register}>Sing up</button>
+            </div>
+
+            <div className="text-center">
+              <span className="txt1">Already have an account?</span>
+              <a className="txt2" href="/login">
+                Login
+              </a>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
     </div>
   )
 }
