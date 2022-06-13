@@ -1,6 +1,6 @@
 import React, { useState , useEffect} from "react";
 import Axios from "axios";
-import "./userList.css";
+import "./friends.css";
 
 function Friends() {
     const [data, setData] = useState([]);

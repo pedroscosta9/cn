@@ -3,7 +3,7 @@ import "./rooms.css"
 
 function Rooms (){
     return(<div className="container-rooms">
-        <button></button>
+        
     </div>);
 }   
 
