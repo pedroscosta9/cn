@@ -9,6 +9,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const app = express();
 const User = require('./user');
+const Room = require('./room');
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 mongoose.connect(
     "mongodb+srv://simaopedro:Simaopedro123.@cluster0.y5zx4b0.mongodb.net/?retryWrites=true&w=majority",
@@ -63,6 +64,7 @@ app.post("/login", (req, res, next) => {
         }
     })(req, res, next);
 });
+
 app.post("/register", (req, res) => {
     User.findOne({ username: req.body.username }, async (err, doc) => {
         if (err) throw err;
@@ -81,20 +83,44 @@ app.post("/register", (req, res) => {
     });
 });
 
-var times = 0
+app.post("/createRoom", (req, res) => {
+    Room.findOne({id: req.body.id}, async (err, doc) => {
+        if (err) throw err;
+        if (doc) res.send("User Already Exists");
+        if (!doc) {
+            const newRoom = new Room({
+                id: req.body.id,
+                name: req.body.name,
+                status: true,
+                player_1: req.body.player_1,
+                player_2: "",
+                winner: "",
+                date : req.body.date,
+            });
+            await newRoom.save()
+            res.send("Room Created");
+        }
+    })
+})
+
+app.get('/roomsList', function (req, res) {
+    Room.find({}, function (err, rooms) {
+        var roomList = [];
+        rooms.forEach(function (room) {
+            roomList.push(room)
+        });
+        res.send(roomList);
+    });
+});
+
 app.get('/usersList', function (req, res) {
-    
     User.find({}, function (err, users) {
         var userList = [];
-
         users.forEach(function (user) {
             userList.push(user)
         });
-
         res.send(userList);
     });
-    console.log("/usersList ",times)
-    times += 1
 });
 
 app.post('/logout', function (req, res, next) {
