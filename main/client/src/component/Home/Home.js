@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Friends from './../Friends/Friends';
 import Rooms from './../Rooms/Rooms';
 import "./home.css"
+import { Button, ChakraProvider } from '@chakra-ui/react'
 
 
 function Home() {
@@ -10,8 +11,16 @@ function Home() {
             <div className="rooms-block">
                 <div className="rooms-header">
                     <div className="rooms-card">
-                        <h1 className="title-rooms">Rooms</h1>
+                        <h1 className="title-rooms bold" >Rooms</h1>
+                        <div className="button-allign">
+                            <ChakraProvider >
+                                <Button colorScheme='blue'>+ Create Room</Button>
+                            </ChakraProvider>
+                        </div>
+                       
+
                     </div>
+
                 </div>
                 <div className="rooms" >
                     <Rooms>

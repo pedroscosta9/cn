@@ -13,3 +13,20 @@
 .single-online-user{
     margin: 10px;
 }
+
+
+
+.isOnlineBall{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.icon-online{
+margin-top: 1.5%;
+
+}
+
+.online-padding{
+margin-left: 10px ;
+}
