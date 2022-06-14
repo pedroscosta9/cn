@@ -23,6 +23,7 @@ function Rooms() {
 
     const rooms = () => {
         var rooms = []
+        console.log(data)
         for (const r in data) {
             if (data[r].status === true) rooms.push(<div className="single-room">{data[r].name}</div>)
         }
@@ -31,6 +32,7 @@ function Rooms() {
 
     return (<div className="container-rooms">
         <button onClick={() => getRooms()}>Refresh</button>
+
         {rooms()}
     </div>);
 }

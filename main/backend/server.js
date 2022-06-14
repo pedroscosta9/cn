@@ -92,6 +92,7 @@ app.post("/createRoom", (req, res) => {
                 id: req.body.id,
                 name: req.body.name,
                 status: true,
+                open: true,
                 player_1: req.body.player_1,
                 player_2: "",
                 winner: "",
@@ -110,7 +111,9 @@ app.get('/roomsList', function (req, res) {
             roomList.push(room)
         });
         console.log(roomList)
+        res.send(roomList);
     });
+  
 });
 
 app.get('/usersList', function (req, res) {

@@ -17,7 +17,7 @@ function PreNavbar() {
                         <Grid3x3Icon />
                     </IconButton>
                     <Typography align="left" variant="h6" component="div" sx={{ flexGrow: 3 }}>
-                        <Button color="inherit" component={Link} to="/" ><h3>MINIGAMES</h3> </Button>
+                       <h3>MINIGAMES</h3> 
                     </Typography>
                     <Button color="inherit" component={Link} to="/login">Login</Button>
                     <Button color="inherit" component={Link} to="/register">Register</Button>

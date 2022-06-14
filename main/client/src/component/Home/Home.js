@@ -17,14 +17,19 @@ function Home() {
             url: "http://localhost:4000/userInfo",
         }).then((res) => {
             setUserInfo(res.data);
+            // if (userInfo === null) {
+            //     navigate("/login", {replace : true});
+            // }
         });
     };
+    
 
     useEffect(() => {
         const loadData = async () => {
             getUserInfo()
         }
         loadData();
+        
     }, []
     )
 

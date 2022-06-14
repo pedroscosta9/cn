@@ -40,7 +40,7 @@ function App() {
         <Routes>
           <Route path="/createroom/:id" element={<RoomCreate />} />
           <Route path="/createroom/:id/*" element={<Navigate to="/" />} />
-          <Route path="/createroom/:id" element={<Room />} />
+          <Route path="/room/:id" element={<Room />} />
           <Route path="/room/:id/*" element={<Navigate to="/" />} />
           <Route path="/login" element={<Login callback={callbackLogin}/>} />
           <Route path="/register" element={<Register />} />
