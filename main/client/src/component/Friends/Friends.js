@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "./friends.css";
-import { Icon } from '@chakra-ui/react'
+import { Icon, ChakraProvider, Button } from '@chakra-ui/react';
+import { RepeatIcon } from '@chakra-ui/icons';
 
 function Friends() {
     const [data, setData] = useState([]);
@@ -38,7 +39,11 @@ function Friends() {
 
     return (
         <div className="container-friends">
-            <button onClick={() => getUsers()}>Refresh</button>
+            <div className="button-refresh-container">
+                <ChakraProvider >
+                    <Button className="button-refresh-icon" colorScheme='blue' onClick={() => getUsers()}><RepeatIcon /></Button>
+                </ChakraProvider>
+            </div>
             <div >
                 <div className="isOnlineBall">
                     <Icon className="icon-online" viewBox='0 0 200 200' color="green">
@@ -48,7 +53,7 @@ function Friends() {
                         />
                     </Icon>
                     <div className="online-padding">
-                        
+
                         <h2 className="bold">Online </h2>
                     </div>
 

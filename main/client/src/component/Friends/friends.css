@@ -30,3 +30,17 @@ margin-top: 1.5%;
 .online-padding{
 margin-left: 10px ;
 }
+
+.button-refresh-container{
+  width: 100%;
+  display: flex;
+}
+
+.button-refresh-icon{
+ 
+  margin: 10px;
+  margin-left: auto;
+  margin-right: 10px;
+  justify-content: flex-end !important;
+
+}
