@@ -6,6 +6,8 @@ import Register from "./component/Register/Register"
 import PreNavbar from "./component/PreNavbar/PreNavbar"
 import PosNavBar from "./component/PosNavBar/PosNavBar"
 import Home from "./component/Home/Home"
+import RoomCreate from "./component/RoomCreate/RoomCreate"
+import Room from "./component/Room/Room"
 
 function App() {
   const [logged, setLogged] = useState(false)
@@ -36,6 +38,10 @@ function App() {
       <BrowserRouter>
         {getNavBar()}
         <Routes>
+          <Route path="/createroom/:id" element={<RoomCreate />} />
+          <Route path="/createroom/:id/*" element={<Navigate to="/" />} />
+          <Route path="/createroom/:id" element={<Room />} />
+          <Route path="/room/:id/*" element={<Navigate to="/" />} />
           <Route path="/login" element={<Login callback={callbackLogin}/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />

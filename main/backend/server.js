@@ -84,9 +84,9 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/createRoom", (req, res) => {
-    Room.findOne({id: req.body.id}, async (err, doc) => {
+    Room.findOne({ id: req.body.id }, async (err, doc) => {
         if (err) throw err;
-        if (doc) res.send("User Already Exists");
+        if (doc) res.send("Room Already Exists");
         if (!doc) {
             const newRoom = new Room({
                 id: req.body.id,
@@ -95,7 +95,7 @@ app.post("/createRoom", (req, res) => {
                 player_1: req.body.player_1,
                 player_2: "",
                 winner: "",
-                date : req.body.date,
+                date: req.body.date,
             });
             await newRoom.save()
             res.send("Room Created");
@@ -109,7 +109,7 @@ app.get('/roomsList', function (req, res) {
         rooms.forEach(function (room) {
             roomList.push(room)
         });
-        res.send(roomList);
+        console.log(roomList)
     });
 });
 
@@ -131,13 +131,21 @@ app.post('/logout', function (req, res, next) {
     })
     req.logout(function (err) {
         if (err) { return next(err); }
-
     });
 });
 
 app.get("/user", (req, res) => {
-    res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
+    res.send(req.user);
 });
+
+app.get("/userInfo", (req, res) => {
+    console.log(req.user)
+    if (req.user) {
+        User.findOne({ username: req.user.username }, async (err, doc) => {
+            res.send(doc)
+        })
+    }
+})
 
 
 //----------------------------------------- END OF ROUTES---------------------------------------------------
