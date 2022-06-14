@@ -24,6 +24,7 @@
 .rooms-header{
     height: 7%;
     margin: 10px 5px 10px 10px;
+    max-height: 60px;
 }
 
 .rooms-card{
