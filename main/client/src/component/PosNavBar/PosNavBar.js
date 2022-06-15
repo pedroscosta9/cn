@@ -14,14 +14,20 @@ function PosNavBar({username, callbackNavBar}) {
     const navigate = useNavigate();
 
     const logout = () => {
+       
         Axios({
             method: "POST",
             withCredentials: true,
             url: "http://localhost:4000/logout",
         }).then(() => {
-            navigate("/", { replace: true })
+            //window.location.reload();
+            // alert("Logged out");
+            // navigate("/login", { replace: true })
             callbackNavBar()
         });
+        //window.location.reload();
+        navigate("/login", { replace: true })
+        window.location.reload();
     };
 
     return (
