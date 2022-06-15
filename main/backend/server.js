@@ -110,7 +110,6 @@ app.get('/roomsList', function (req, res) {
         rooms.forEach(function (room) {
             roomList.push(room)
         });
-        console.log(roomList)
         res.send(roomList);
     });
   
@@ -141,8 +140,15 @@ app.get("/user", (req, res) => {
     res.send(req.user);
 });
 
+app.get("/playerInfo", (req, res) => {
+    if (req.user) {
+        User.findOne({ id: req.body.id }, async (err, doc) => {
+            res.send(doc)
+        })
+    }
+})
+
 app.get("/userInfo", (req, res) => {
-    console.log(req.user)
     if (req.user) {
         User.findOne({ username: req.user.username }, async (err, doc) => {
             res.send(doc)
@@ -156,3 +162,37 @@ app.get("/userInfo", (req, res) => {
 app.listen(4000, () => {
     console.log("Server Has Started");
 });
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+const http = require('http');
+const {Server} = require('socket.io');
+
+app.use(cors())
+
+const server = http.createServer(app)
+
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000", 
+        methods : ["GET", "POST"],
+    }
+})
+
+io.on('connection', (socket) =>{
+    socket.id = socket.handshake.query._id
+    console.log('User Connected: ', socket.id)
+
+    socket.on("join_room", (data) =>{
+        socket.join(data)
+        console.log('User: ', socket.id, 'Room: ', data)
+    })
+})
+
+server.listen(3001, () => {
+    console.log("Listening on port 3001")
+})

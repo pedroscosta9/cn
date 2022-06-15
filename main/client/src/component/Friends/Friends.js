@@ -24,7 +24,7 @@ function Friends() {
     const online = () => {
         var usersOnline = []
         for (const i in data) {
-            if (data[i].isOnline === true) usersOnline.push(<div className="single-online-user">{data[i].username}</div>)
+            if (data[i].isOnline === true) usersOnline.push(<div key={data[i].username} className="single-online-user">{data[i].username}</div>)
         }
         return usersOnline
     };
@@ -32,7 +32,7 @@ function Friends() {
     const offline = () => {
         var usersOffline = []
         for (const i in data) {
-            if (data[i].isOnline === false) usersOffline.push(<div >{data[i].username}</div>)
+            if (data[i].isOnline === false) usersOffline.push(<div key={data[i].username} className="single-online-user">{data[i].username}</div>)
         }
         return usersOffline
     };

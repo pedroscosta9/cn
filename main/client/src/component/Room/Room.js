@@ -2,11 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import "./room.css";
+import Axios from "axios";
+import io from "socket.io-client"
 
 function Room(state) {
     let { id } = useParams();
     const location = useLocation();
-    var player_1 = location.state;
+    state = location.state
+    var joined = true
+    if (state != null){
+        joined = state.joined 
+    }
+    var player_1 = {}
+    if (!joined) player_1 = state.player_1;
+    
+    let socket = ""
+
+
+    const [userInfo, setUserInfo] = useState(null);
 
     const [game, setGame] = useState(Array(9).fill(''));
     const [isX, setIsX] = useState(false);
@@ -29,6 +42,43 @@ function Room(state) {
         setTurnNumber(0);
     };
 
+    // const getUserInfo = () => {
+    //     let id = split_id[0]
+    //     console.log(id)
+    //     Axios({
+    //         method: "GET",
+    //         data: {
+    //             id: id
+    //         },
+    //         withCredentials: true,
+    //         url: "http://localhost:4000/playerInfo",
+    //     }).then((res) => {
+    //         setUserInfo(res.data);
+    //         player_1 = userInfo
+    //     });
+    // };
+
+    const getUserInfo = () => {
+        Axios({
+            method: "GET",
+            withCredentials: true,
+            url: "http://localhost:4000/userInfo",
+        }).then((res) => {
+            setUserInfo(res.data);
+            socket = io.connect("http://localhost:3001", {query: res.data});
+            socket.emit("join_room", id)
+        });
+    };
+
+    useEffect(() =>{
+        if(joined){
+            getUserInfo()
+        }else{
+            socket = io.connect("http://localhost:3001", {query: player_1})
+            socket.emit("join_room", id)
+        }
+    }, []) 
+
     useEffect(() => {
         // check for winner for every turn
         combinations.forEach((c) => {
@@ -37,12 +87,12 @@ function Room(state) {
             }
         });
     }, [game]);
+    
     return (
         <div className="container-room-main">
             <div className="container-room">
-                <h2 className="bold">{player_1.username}'s Room</h2>
-                <p><h3>Room id: <input type="text" maxlength="10" size="30" value={id} id="myInput"/></h3></p>
-                
+                {player_1 && player_1 !==null ? <h2 className="bold">{player_1.username}'s Room</h2> : null}
+                <span><h3>Room id: <input type="text" readOnly maxLength="10" size="30" value={id} id="myInput"/></h3></span>
             </div>
             <div className="container-game">
                 <p>

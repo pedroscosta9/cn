@@ -4,10 +4,12 @@ import { Button, ChakraProvider } from '@chakra-ui/react'
 import Axios from "axios";
 import avatar_3 from "./../../Images/avatar_3.png";
 import { RepeatIcon } from '@chakra-ui/icons';
+import { useNavigate } from "react-router-dom";
 
 import question_mark from "./../../Images/question_mark.png";
 function Rooms() {
     const [data, setData] = useState([]);
+    const navigate = useNavigate();
 
     const getRooms = () => {
         Axios({
@@ -16,7 +18,6 @@ function Rooms() {
             url: "http://localhost:4000/roomsList",
         }).then((res) => {
             setData(res.data);
-            console.log(res)
         });
     };
 
@@ -25,14 +26,18 @@ function Rooms() {
         []
     )
 
+    const joinRoom = (id) => {
+        var url = "/room/" + id
+        navigate(url, { replace: true , state : {joined : true}})
+    }
+
     const rooms = () => {
         var rooms = []
-        console.log(data)
         for (const r in data) {
             if (data[r].status === true) rooms.push(
                 // <><div className="single-room">{data[r].name}</div>
 
-                <div className="card">
+                <div className="card" key={data[r].id}>
                     <div className="card__title">{data[r].name} </div>
 
                     <div className="card__image">
@@ -46,13 +51,8 @@ function Rooms() {
                             {data[r].open ? <img alt="player2" src={question_mark} /> : <img alt="no oponent" className="no_oponent" src={avatar_3} />}
                         </div>
                     </div>
-
                     {data[r].open ? <div>Waiting for oponent...</div> : null}
-
-
                 </div>
-
-
             )
         }
         return rooms

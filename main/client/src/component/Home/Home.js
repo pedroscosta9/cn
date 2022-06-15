@@ -38,7 +38,7 @@ function Home() {
             if (userInfo !== undefined) {
                 let date = new Date()
                 let url = "/createroom/" + userInfo._id + "@" + date.getTime()
-                navigate(url, { replace: true , state: userInfo});
+                navigate(url, { replace: true , state: {player_1 : userInfo, joined: false}});
             }
         }
     }
