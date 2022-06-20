@@ -158,7 +158,6 @@ app.get("/userInfo", (req, res) => {
 })
 
 app.post("/saveGame", (req, res) => {
-    console.log(req.body)
     const game = new Game({
         player_id: req.body.id,
         game_state: req.body.game
@@ -167,16 +166,13 @@ app.post("/saveGame", (req, res) => {
     game.save()
 })
 
-app.get('/gameList', (req, res) => {
-    console.log(req.body)
-    Game.find({player_id: req.body.id}, function (err, games) {
-
+app.post('/listOfGames', (req, res) => {
+    Game.find({player_id: req.body.user_id}, function (err, games) {
         var gameList = [];
         games.forEach(function (game) {
             gameList.push(game)
         
         });
-
         res.send(gameList);
     });
 });

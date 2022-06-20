@@ -10,33 +10,21 @@ function GameHistory() {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
 
-    // const getHistory = () => {
-    //     Axios({
-    //         method: "GET",
-    //         data: {
-    //             id: localStorage.getItem("id"),
-               
-    //         },
-    //         withCredentials: true,
-    //         url: "http://localhost:4000/gameList",
-    //     }).then((res) => {
-    //         setData(res.data);
-    //     });
-    // };
-
-    const getHistory = () => {
+    const listOfGames = () => {
         Axios({
-            method: "GET",
+            method: "POST",
             data: {
-                id: "62a38d2a87410b3a6849a72d",
+                user_id: localStorage.getItem("id"),
             },
             withCredentials: true,
-            url: "http://localhost:4000/gameList",
-        })
-    };
+            url: "http://localhost:4000/listOfGames",
+        }).then((res) => {
+            setData(res.data)
+        });
+    }
 
     useEffect(() =>
-        getHistory(),
+    listOfGames(),
         []
     )
 
@@ -45,10 +33,7 @@ function GameHistory() {
         var historyCards = []
         for (const r in data) {
             
-            
 
-            
-            
         }
         console.log(data)
         return historyCards
@@ -56,12 +41,12 @@ function GameHistory() {
 
     return (<div className="container-rooms">
 
-    
-            <ChakraProvider >
-                <Button className="button-refresh" colorScheme='blue' onClick={() => getHistory()}>Refresh &nbsp;<RepeatIcon /></Button>
-            </ChakraProvider>
-      
-       
+
+        <ChakraProvider >
+            <Button className="button-refresh" colorScheme='blue' onClick={() => listOfGames()}>Refresh &nbsp;<RepeatIcon /></Button>
+        </ChakraProvider>
+
+
         <div className="cards-container">
             {history()}
         </div>
