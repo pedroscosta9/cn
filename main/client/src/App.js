@@ -9,9 +9,9 @@ import Home from "./component/Home/Home"
 import RoomCreate from "./component/RoomCreate/RoomCreate"
 import Room from "./component/Room/Room"
 import RoomBots from "./component/RoomBots/RoomBots"
+import {useNavigate} from "react-router-dom";
 
 function App() {
-  
   const getNavBar = () => {
     if(localStorage.getItem("logged") === "true") {
       console.log(localStorage.getItem("logged"))
@@ -19,6 +19,15 @@ function App() {
     }
     else{
       return <PreNavbar />
+    }
+  }
+
+  const isLogged = () => {
+    if(localStorage.getItem("logged") === "true"){
+      return <Home />;
+    }
+    else{
+      <Navigate to="/login" />
     }
   }
 
@@ -33,7 +42,7 @@ function App() {
           <Route path="/room/:id/*" element={<Navigate to="/" />} />
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={isLogged()} />
           <Route path="/*" element={<Navigate to="/" />} />
           <Route path="/roombots" element={<RoomBots />} />
         </Routes>

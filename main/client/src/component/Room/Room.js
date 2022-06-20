@@ -86,13 +86,13 @@ function Room(state) {
         }
     }, []) 
 
-    useEffect(() =>{
-        socket.on("room-size", (data) =>{
-            if(`${data}` === "2"){
-                setIsFull(true)
-            }
-        })
-    })
+    // useEffect(() =>{
+    //     socket.on("room-size", (data) =>{
+    //         if(`${data}` === "2"){
+    //             setIsFull(true)
+    //         }
+    //     })
+    // })
 
     useEffect(() => {
         // check for winner for every turn
