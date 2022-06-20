@@ -5,8 +5,8 @@ import Axios from "axios";
 import avatar_3 from "./../../Images/avatar_3.png";
 import { RepeatIcon } from '@chakra-ui/icons';
 import { useNavigate } from "react-router-dom";
-
 import question_mark from "./../../Images/question_mark.png";
+
 function Rooms() {
     const [data, setData] = useState([]);
     const navigate = useNavigate();

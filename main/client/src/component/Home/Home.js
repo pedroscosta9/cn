@@ -49,6 +49,10 @@ function Home() {
         navigate("/roombots");
     }
 
+    const createHistory = () => {
+        navigate("/history");
+    }
+
     return (
         <div className="container-home">
             <div className="rooms-block">
@@ -64,6 +68,12 @@ function Home() {
                         <div className="button-allign">
                             <ChakraProvider >
                                 <Button colorScheme='blue' onClick={createRoom}>+ Create Room</Button>
+                            </ChakraProvider>
+                        </div>
+
+                        <div className="button-allign">
+                            <ChakraProvider >
+                                <Button colorScheme='blue' onClick={createHistory}>Match History</Button>
                             </ChakraProvider>
                         </div>
 

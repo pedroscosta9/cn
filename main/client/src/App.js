@@ -9,6 +9,7 @@ import Home from "./component/Home/Home"
 import RoomCreate from "./component/RoomCreate/RoomCreate"
 import Room from "./component/Room/Room"
 import RoomBots from "./component/RoomBots/RoomBots"
+import GameHistory from "./component/GameHistory/GameHistory"
 
 function App() {
   const getNavBar = () => {
@@ -41,6 +42,7 @@ function App() {
           <Route path="/" element={isLogged()} />
           <Route path="/*" element={<Navigate to="/" />} />
           <Route path="/roombots" element={<RoomBots />} />
+          <Route path="/history" element={<GameHistory />} />
         </Routes>
       </BrowserRouter>
     </div>

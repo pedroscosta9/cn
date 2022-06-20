@@ -167,12 +167,16 @@ app.post("/saveGame", (req, res) => {
     game.save()
 })
 
-app.get('/gameList', function (req, res) {
+app.get('/gameList', (req, res) => {
+    console.log(req.body)
     Game.find({player_id: req.body.id}, function (err, games) {
+
         var gameList = [];
         games.forEach(function (game) {
             gameList.push(game)
+        
         });
+
         res.send(gameList);
     });
 });
