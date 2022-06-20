@@ -37,7 +37,7 @@ function Rooms() {
             if (data[r].status === true) rooms.push(
                 // <><div className="single-room">{data[r].name}</div>
 
-                <div className="card" key={data[r].id}>
+                <div className="card" onClick={() =>joinRoom(data[r].id)} key={data[r].id}>
                     <div className="card__title">{data[r].name} </div>
 
                     <div className="card__image">

@@ -8,10 +8,11 @@ function RoomCreate(state) {
     let { id } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
-    var player_1 = location.state;
+    var player_1 = location.state.player_1;
     var split_id = id.split("@")
 
     const createRoom = () => {
+        console.log(player_1)
         Axios({
             method: "POST",
             data: {

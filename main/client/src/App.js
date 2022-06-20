@@ -8,6 +8,7 @@ import PosNavBar from "./component/PosNavBar/PosNavBar"
 import Home from "./component/Home/Home"
 import RoomCreate from "./component/RoomCreate/RoomCreate"
 import Room from "./component/Room/Room"
+import Room_bots from "./component/Room_bots/Room_bots"
 
 function App() {
   const [logged, setLogged] = useState(false)
@@ -46,6 +47,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
           <Route path="/*" element={<Navigate to="/" />} />
+          <Route path="/roombots" element={<Room_bots />} />
         </Routes>
       </BrowserRouter>
     </div>

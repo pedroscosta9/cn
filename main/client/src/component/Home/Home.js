@@ -22,14 +22,14 @@ function Home() {
             // }
         });
     };
-    
+
 
     useEffect(() => {
         const loadData = async () => {
             getUserInfo()
         }
         loadData();
-        
+
     }, []
     )
 
@@ -38,9 +38,15 @@ function Home() {
             if (userInfo !== undefined) {
                 let date = new Date()
                 let url = "/createroom/" + userInfo._id + "@" + date.getTime()
-                navigate(url, { replace: true , state: {player_1 : userInfo, joined: false}});
+                console.log(userInfo)
+                navigate(url, { replace: true, state: { player_1: userInfo, joined: false } });
             }
         }
+    }
+
+    const createRoomBots = () => {
+        //alert("rooms")
+        navigate("/roombots");
     }
 
     return (
@@ -49,11 +55,19 @@ function Home() {
                 <div className="rooms-header">
                     <div className="rooms-card">
                         <h1 className="title-rooms bold" >Rooms</h1>
+                        <div className="button-allign-bots">
+                            <ChakraProvider >
+                                <Button colorScheme='blue' onClick={createRoomBots}>VS BOTS</Button>
+                            </ChakraProvider>
+                        </div>
+
                         <div className="button-allign">
                             <ChakraProvider >
                                 <Button colorScheme='blue' onClick={createRoom}>+ Create Room</Button>
                             </ChakraProvider>
                         </div>
+
+
                     </div>
                 </div>
                 <div className="rooms" >
