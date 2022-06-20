@@ -19,7 +19,8 @@ function Login({callback}) {
             },
             withCredentials: true,
             url: "http://localhost:4000/login",
-        }).then(() => {
+        }).then((res) => {
+            localStorage.setItem("id", res.data._id);
             localStorage.setItem("username", loginUsername);
             localStorage.setItem("logged", "true")
             navigate("/", { replace: true });

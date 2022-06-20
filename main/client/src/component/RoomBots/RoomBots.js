@@ -1,44 +1,45 @@
 import React, { useState, useEffect } from "react";
-
+import Axios from "axios";
 import "./room.css";
-
+import { useNavigate } from "react-router-dom";
 
 
 function RoomBots(state) {
-    
+
+    const navigate = useNavigate();
 
     const spotsLeft = [];
-
 
     const [game, setGame] = useState(Array(9).fill(''));
     let isX = true;
     const [turnNumber, setTurnNumber] = useState(0);
     const [winner, setWinner] = useState(false);
-    
+
     const turn = (index) => {
         let g = [...game];
         if (!g[index] && !winner) {
             g[index] = 'X';
             isX = true
-            playRandom(g)
-            
+            combinations.forEach((c) => {
+                if (game[c[0]] === game[c[1]] && game[c[0]] === game[c[2]] && game[c[0]] !== '') {
+                    setWinner(true);
+                }
+            });
+            if(!winner) {
+                playRandom(g)
+            }
         }
     };
 
-    const playRandom = (g) =>{
-        combinations.forEach((c) => {
-            if (game[c[0]] === game[c[1]] && game[c[0]] === game[c[2]] && game[c[0]] !== '') {
-                setWinner(true);
-                return
-            }
-        });
+    const playRandom = (g) => {
+        console.log(winner)
         var count = 0;
-        for  (var item in g )   {
-            
+        for (var item in g) {
+
             if (g[item] !== 'X' && g[item] !== 'O') {
                 spotsLeft.push(count);
             }
-            count ++;
+            count++;
         }
         var itemSpots = spotsLeft[Math.floor(Math.random() * spotsLeft.length)];
         g[itemSpots] = 'O'
@@ -47,11 +48,26 @@ function RoomBots(state) {
         setTurnNumber(turnNumber + 2);
     }
 
+    const saveGame = () => {
+        Axios({
+            method: "POST",
+            data: {
+                id: localStorage.getItem("id"),
+                game: game,
+            },
+            withCredentials: true,
+            url: "http://localhost:4000/saveGame",
+        }).then(() => {
+
+        });
+    }
+
     const restart = () => {
         setGame(Array(9).fill(''));
         setWinner(false);
         setTurnNumber(0);
         isX = false;
+        saveGame()
     };
 
     useEffect(() => {
@@ -63,10 +79,16 @@ function RoomBots(state) {
         });
     }, [game]);
 
+    useEffect(() => {
+        if (localStorage.getItem("logged") === "false") {
+            navigate("/login", { replace: true });
+        }
+    })
+
     return (
         <div className="container-room-main">
             <div className="container-room">
-                 <h2 className="bold">You are playing against BOT</h2> 
+                <h2 className="bold">You are playing against BOT</h2>
                 {/* <span><h3>Room id: <input type="text" readOnly maxLength="10" size="30" value={id} id="myInput"/></h3></span> */}
             </div>
             <div className="container-game">
@@ -112,10 +134,7 @@ function RoomBots(state) {
 const Box = ({ index, turn, value }) => {
     return (
         <div className="box" onClick={() => {
-                       
             turn(index)
-           // setIsX(isX === "X" ? "O" : "X" )
-
         }}>
             {value}
         </div>

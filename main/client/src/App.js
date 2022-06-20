@@ -9,7 +9,6 @@ import Home from "./component/Home/Home"
 import RoomCreate from "./component/RoomCreate/RoomCreate"
 import Room from "./component/Room/Room"
 import RoomBots from "./component/RoomBots/RoomBots"
-import {useNavigate} from "react-router-dom";
 
 function App() {
   const getNavBar = () => {
@@ -25,9 +24,6 @@ function App() {
   const isLogged = () => {
     if(localStorage.getItem("logged") === "true"){
       return <Home />;
-    }
-    else{
-      <Navigate to="/login" />
     }
   }
 

@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const User = require('./user');
 const Room = require('./room');
+const Game = require('./game');
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 mongoose.connect(
     "mongodb+srv://simaopedro:Simaopedro123.@cluster0.y5zx4b0.mongodb.net/?retryWrites=true&w=majority",
@@ -58,8 +59,8 @@ app.post("/login", (req, res, next) => {
                     if (err) throw err;
                     doc.isOnline = true;
                     await doc.save();
+                    res.send(doc);
                 })
-                res.send("Successfully Authenticated");
             });
         }
     })(req, res, next);
@@ -155,6 +156,26 @@ app.get("/userInfo", (req, res) => {
         })
     }
 })
+
+app.post("/saveGame", (req, res) => {
+    console.log(req.body)
+    const game = new Game({
+        player_id: req.body.id,
+        game_state: req.body.game
+    })
+    console.log(game)
+    game.save()
+})
+
+app.get('/gameList', function (req, res) {
+    Game.find({player_id: req.body.id}, function (err, games) {
+        var gameList = [];
+        games.forEach(function (game) {
+            gameList.push(game)
+        });
+        res.send(gameList);
+    });
+});
 
 
 //----------------------------------------- END OF ROUTES---------------------------------------------------
