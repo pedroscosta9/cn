@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { RepeatIcon } from '@chakra-ui/icons';
-import { useNavigate } from "react-router-dom";
-import { Button, ChakraProvider } from '@chakra-ui/react'
+import "./GameHistory.css"
 import Axios from "axios";
 
 
 function GameHistory() {
 
     const [data, setData] = useState([]);
-    const navigate = useNavigate();
+   
 
     const listOfGames = () => {
         Axios({
@@ -24,7 +22,7 @@ function GameHistory() {
     }
 
     useEffect(() =>
-    listOfGames(),
+        listOfGames(),
         []
     )
 
@@ -32,20 +30,45 @@ function GameHistory() {
     const history = () => {
         var historyCards = []
         for (const r in data) {
-            
+
+            console.log(data[r].game_state)
+            historyCards.push(
+                <div className="card" >
+                    <div className="title-bold">
+                        <h2>VS AI</h2>
+
+                    </div>
+                    <table>
+                        <tr>
+                            <td>{data[r].game_state[0]}</td>
+                            <td className="vert">{data[r].game_state[1]}</td>
+                            <td>{data[r].game_state[2]}</td>
+                        </tr>
+                        <tr>
+                            <td className="hori">{data[r].game_state[3]}</td>
+                            <td className="vert hori">{data[r].game_state[4]}</td>
+                            <td className="hori">{data[r].game_state[5]}</td>
+                        </tr>
+                        <tr>
+                            <td>{data[r].game_state[6]}</td>
+                            <td className="vert">{data[r].game_state[7]}</td>
+                            <td>{data[r].game_state[8]}</td>
+                        </tr>
+                    </table>
+                </div>)
 
         }
-        console.log(data)
+
         return historyCards
     };
 
-    return (<div className="container-rooms">
+    return (<div className="container-rooms2">
+        <div className="title-rooms">
+            <div className="container-title">
+                <h3>Match History</h3>
+            </div>
 
-
-        <ChakraProvider >
-            <Button className="button-refresh" colorScheme='blue' onClick={() => listOfGames()}>Refresh &nbsp;<RepeatIcon /></Button>
-        </ChakraProvider>
-
+        </div>
 
         <div className="cards-container">
             {history()}
