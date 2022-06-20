@@ -6,7 +6,7 @@ import Axios from "axios";
 function GameHistory() {
 
     const [data, setData] = useState([]);
-   
+
 
     const listOfGames = () => {
         Axios({
@@ -62,18 +62,19 @@ function GameHistory() {
         return historyCards
     };
 
-    return (<div className="container-rooms2">
-        <div className="title-rooms">
-            <div className="container-title">
-                <h3>Match History</h3>
+    return (
+        <div className="container-rooms2">
+            <div className="title-rooms">
+                <div className="container-title">
+                    <h3>Match History</h3>
+                </div>
+
             </div>
 
-        </div>
-
-        <div className="cards-container">
-            {history()}
-        </div>
-    </div>);
+            <div className="cards-container">
+                {history()}
+            </div>
+        </div>);
 }
 
 export default GameHistory;

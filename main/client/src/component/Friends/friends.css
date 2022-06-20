@@ -6,7 +6,7 @@
     display: block !important;
     box-shadow: 0 0 1em rgb(155, 154, 154);
     border-radius: 10px;
-    
+    overflow-y: auto;
    
   }
 
