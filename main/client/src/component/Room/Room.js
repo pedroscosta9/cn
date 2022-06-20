@@ -19,12 +19,18 @@ function Room(state) {
     let socket = ""
 
 
+    const currentUser = {
+        socket_id: "",
+    }
+
     const [userInfo, setUserInfo] = useState(null);
 
     const [game, setGame] = useState(Array(9).fill(''));
     const [isX, setIsX] = useState(false);
     const [turnNumber, setTurnNumber] = useState(0);
     const [winner, setWinner] = useState(false);
+
+    const[isFull, setIsFull] = useState(false);
 
     const turn = (index) => {
         let g = [...game];
@@ -66,18 +72,27 @@ function Room(state) {
         }).then((res) => {
             setUserInfo(res.data);
             socket = io.connect("http://localhost:3001", {query: res.data});
-            socket.emit("join_room", id)
+            socket.emit("join-room", id)
         });
     };
 
     useEffect(() =>{
+        console.log(joined)
         if(joined){
             getUserInfo()
         }else{
             socket = io.connect("http://localhost:3001", {query: player_1})
-            socket.emit("join_room", id)
+            socket.emit("join-room", id)
         }
     }, []) 
+
+    useEffect(() =>{
+        socket.on("room-size", (data) =>{
+            if(`${data}` === "2"){
+                setIsFull(true)
+            }
+        })
+    })
 
     useEffect(() => {
         // check for winner for every turn

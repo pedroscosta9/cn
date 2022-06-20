@@ -4,7 +4,7 @@ import "./room.css";
 
 
 
-function Room_bots(state) {
+function RoomBots(state) {
     
 
     const spotsLeft = [];
@@ -133,4 +133,4 @@ const combinations = [
     [2, 4, 6],
 ];
 
-export default Room_bots;
+export default RoomBots;

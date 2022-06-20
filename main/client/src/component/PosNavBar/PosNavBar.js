@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
-function PosNavBar({username, callbackNavBar}) {
+function PosNavBar({username}) {
     const navigate = useNavigate();
 
     const logout = () => {
@@ -23,9 +23,10 @@ function PosNavBar({username, callbackNavBar}) {
             //window.location.reload();
             // alert("Logged out");
             // navigate("/login", { replace: true })
-            callbackNavBar()
         });
         //window.location.reload();
+        localStorage.setItem("logged", "false")
+        localStorage.setItem("username", "")
         navigate("/login", { replace: true })
         window.location.reload();
     };

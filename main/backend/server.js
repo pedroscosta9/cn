@@ -112,7 +112,7 @@ app.get('/roomsList', function (req, res) {
         });
         res.send(roomList);
     });
-  
+
 });
 
 app.get('/usersList', function (req, res) {
@@ -170,7 +170,7 @@ app.listen(4000, () => {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 const http = require('http');
-const {Server} = require('socket.io');
+const { Server } = require('socket.io');
 
 app.use(cors())
 
@@ -178,18 +178,23 @@ const server = http.createServer(app)
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000", 
-        methods : ["GET", "POST"],
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
     }
 })
 
-io.on('connection', (socket) =>{
-    socket.id = socket.handshake.query._id
-    console.log('User Connected: ', socket.id)
+io.on('connection', (socket) => {
 
-    socket.on("join_room", (data) =>{
+    socket.on("join-room", (data) => {
         socket.join(data)
         console.log('User: ', socket.id, 'Room: ', data)
+        socket.emit("room-size", io.sockets.adapter.rooms.get(data).size)
+    })
+
+
+
+    socket.on("game_update", (data, id) => {
+        console.log()
     })
 })
 

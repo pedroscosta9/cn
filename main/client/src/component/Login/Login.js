@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import "./../../styles.css"
 import { Link } from 'react-router-dom';
 
+
 function Login({callback}) {
     const [loginUsername, setLoginUsername] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
@@ -19,8 +20,10 @@ function Login({callback}) {
             withCredentials: true,
             url: "http://localhost:4000/login",
         }).then(() => {
-            callback(loginUsername)
+            localStorage.setItem("username", loginUsername);
+            localStorage.setItem("logged", "true")
             navigate("/", { replace: true });
+            window.location.reload();
         });
     };
 
